@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -23,6 +24,7 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 */
 
 
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::group([
     'prefix' => LaravelLocalization::setLocale(),
