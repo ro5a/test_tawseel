@@ -199,16 +199,9 @@
                 });
             });
             $('#categoryFilter').on('change', function() {
-                console.log($(this).val());
-                setTimeout(function() { // wait for 5 secs(2)
-                    table.ajax.reload(); // then reload the page.(3)
-                }, 5000);
                 var category_id = $('#categoryFilter').val();
-
                 var url = '{{ route('products') }}?category_id=' + category_id;
-
                 table.ajax.url(url).load();
-                // table.ajax.reload();
             });
 
             function modal(name, id) {
