@@ -9,7 +9,7 @@
                         اضافه منتج
                     </button>
                 </a>
-                <select id="categoryFilter" class="form-control">
+                <select id="categoryFilter" name="category_id" class="form-control">
                     <option value="">All Categories</option>
                     @foreach ($categories as $category)
                         <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -145,14 +145,9 @@
             categoryFilter
             $(document).ready(function() {
                 table = $('#datatable').DataTable({
-                    processing: true,
-                    serverSide: true,
                     ajax: {
-                        url: '/products',
-                        data: function(d) {
-                            d.category_id = $('#categoryFilter')
-                                .val(); // Add category filter to AJAX request
-                        },
+                        url: '{{ route('products') }}',
+
                     },
                     columns: [{
                             data: 'id',
@@ -208,6 +203,11 @@
                 setTimeout(function() { // wait for 5 secs(2)
                     table.ajax.reload(); // then reload the page.(3)
                 }, 5000);
+                var category_id = $('#categoryFilter').val();
+
+                var url = '{{ route('products') }}?category_id=' + category_id;
+
+                table.ajax.url(url).load();
                 // table.ajax.reload();
             });
 

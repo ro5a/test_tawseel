@@ -12,12 +12,13 @@ class OrderController extends Controller
 {
     public function change_status($id)
     {
-        // try {
+        try {
             $order = Order::where('id', $id)->first();
             if ($order->status == null) {
                 $order->status = 'قيد التحضير';
                 $order->save();
-            if ($order->status == 'قيد التحضير') {
+            }
+            elseif ($order->status == 'قيد التحضير') {
                 $order->status = 'في الطريق إليك';
                 $order->save();
             } elseif ($order->status == 'في الطريق إليك') {
@@ -32,11 +33,11 @@ class OrderController extends Controller
 
                 return response()->json($response, 200);
             }
-        // } catch (\Exception $e) {
-        //     return $response = [
-        //         'success' => false,
-        //         'message' => 'لا تستطيع تغيير الحالة',
-        //     ];
-        // }
+        } catch (\Exception $e) {
+            return $response = [
+                'success' => false,
+                'message' => 'لا تستطيع تغيير الحالة',
+            ];
+        }
     }
 }

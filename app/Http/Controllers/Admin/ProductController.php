@@ -26,15 +26,18 @@ class ProductController extends Controller
         if ($request->ajax()) {
             $query = Product::with(['media', 'category']);
 
-            // Filter by category name if provided
-            if ($request->has('category_name') && $request->category_name != '') {
+            if ($request->has('category_id') && $request->category_id != '') {
                 $query->whereHas('category', function ($q) use ($request) {
-                    $q->where('name', 'LIKE', '%' . $request->category_name . '%');
+                    $q->where('id',  $request->category_id . '%');
                 });
             }
+            if ($id == null) {
 
-            $products = $query->get();
-            return response()->json($products);
+                $products = $query->get();
+            } else {
+                $products = $query->where('category_id', $id)->get();
+            }
+            return response()->json(['data' => $products]);
         }
 
         return view('admin.product', [
@@ -46,28 +49,28 @@ class ProductController extends Controller
     }
 
     public function getProducts(Request $request)
-{
-    $query = Product::with(['category','media']);
+    {
+        $query = Product::with(['category', 'media']);
 
-    // Filter by category
-    if ($request->has('category_id') && $request->category_id) {
-        $query->where('category_id', $request->category_id);
+        // Filter by category
+        if ($request->has('category_id') && $request->category_id) {
+            $query->where('category_id', $request->category_id);
+        }
+
+        // Search functionality (optional)
+        if ($request->has('search') && $request->search) {
+            $query->where('name', 'LIKE', '%' . $request->search . '%');
+        }
+
+        // Paginate and return data
+        $products = $query->paginate(10);
+
+
+
+        Log::info(json_encode($products));
+
+        return response()->json($products, 200, ['Content-Type' => 'application/json']);
     }
-
-    // Search functionality (optional)
-    if ($request->has('search') && $request->search) {
-        $query->where('name', 'LIKE', '%' . $request->search . '%');
-    }
-
-    // Paginate and return data
-    $products = $query->paginate(10);
-
-
-
-    Log::info(json_encode($products));
-
-    return response()->json($products, 200, ['Content-Type' => 'application/json']);
-}
 
 
     public function add(AddProductRequest $request)
@@ -84,14 +87,14 @@ class ProductController extends Controller
             ]);
             if ($request->hasFile('image') && $request->file('image')->isValid()) {
                 $media_functions = new MediaController();
-                $media_functions->saveImage('product', $product->id,$request->file('image'));
+                $media_functions->saveImage('product', $product->id, $request->file('image'));
             }
 
-            return to_route('products',$request->category_id)->with([
+            return to_route('products', $request->category_id)->with([
                 'success' => CRUDMESSAGE::MESSAGE_ADD_SUCCESS,
             ]);
         } catch (\Exception) {
-            return to_route('products',$request->category_id)->with([
+            return to_route('products', $request->category_id)->with([
                 'error' => CRUDMESSAGE::MESSAGE_ADD_ERROR,
             ]);
         }
@@ -116,7 +119,7 @@ class ProductController extends Controller
                     Media::where('id', $data->media->id)->delete();
                 }
                 $media_functions = new MediaController();
-                $media_functions->saveImage('product', $product->id,$request->file('image'));
+                $media_functions->saveImage('product', $product->id, $request->file('image'));
             }
             return redirect('products')->with([
                 'success' => CRUDMESSAGE::MESSAGE_UPDATE_SUCCESS,

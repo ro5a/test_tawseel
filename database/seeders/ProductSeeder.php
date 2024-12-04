@@ -25,7 +25,7 @@ class ProductSeeder extends Seeder
         $products = [
             [
                 "id" => 1,
-                "category_id" => 9,
+                "category_id" => 3,
                 "name" =>  "فاونديشن مات من ماركة X",
                 "price" =>  2000,
                 "quantity" => 10,
@@ -33,7 +33,7 @@ class ProductSeeder extends Seeder
             ],
             [
                 "id" => 2,
-                "category_id" => 10,
+                "category_id" => 2,
                 "name" =>  "كريم بي بي من ماركة Y",
                 "price" =>  2000,
                 "quantity" => 10,
@@ -41,7 +41,7 @@ class ProductSeeder extends Seeder
             ],
             [
                 "id" => 3,
-                "category_id" => 11,
+                "category_id" => 1,
                 "name" =>  "كريم سي سي من ماركة Z",
                 "price" =>  2000,
                 "quantity" => 10,
