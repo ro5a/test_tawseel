@@ -1,0 +1,70 @@
+*,body{
+    /* font-family: 'DIN Next LT Arabic'; */
+    font-family: 'Noto Kufi Arabic', sans-serif;
+
+}
+
+
+@media (min-width: 1025px){
+.flexnav li {
+    float: right;
+}
+
+}
+
+.hero-arrow{
+    rotate: 90deg !important;
+    transform: translate3d(-60px, 0, 0) !important;
+}
+
+#hero.has-image .hero-subtitle,#hero.has-image #hero-caption ,#hero-description {
+
+    text-align: right;
+
+}
+#hero-description .inner{
+    display: flex;
+}
+@media only screen and (max-width: 767px){
+    #hero-description .inner {
+        flex-direction: column;
+
+    }
+}
+.hero-footer-right
+{
+    float: left;
+}
+@media only screen and (max-width: 1024px){
+.hero-footer-right {
+    float: right;
+}}
+.entry-meta li{
+    display: block;
+}
+
+.item-caption-wrapper i.arrow-icon{
+    rotate: 90deg !important;
+}
+
+.next-hero-subtitle span{
+    text-align: right;
+}
+#hero-caption{
+    text-align: right !important;
+}
+.swiper-slide .inner{
+    text-align: right !important;
+
+}
+.swiper-slide .inner i.arrow-icon{
+    rotate: 90deg;
+}
+.two_fourth.details{
+    float: right !important;
+}
+
+.one_third{
+    margin-right: 0 !important;
+    margin-bottom: 60px !important;
+}
