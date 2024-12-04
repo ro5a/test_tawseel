@@ -48,29 +48,7 @@ class ProductController extends Controller
         ]);
     }
 
-    public function getProducts(Request $request)
-    {
-        $query = Product::with(['category', 'media']);
-
-        // Filter by category
-        if ($request->has('category_id') && $request->category_id) {
-            $query->where('category_id', $request->category_id);
-        }
-
-        // Search functionality (optional)
-        if ($request->has('search') && $request->search) {
-            $query->where('name', 'LIKE', '%' . $request->search . '%');
-        }
-
-        // Paginate and return data
-        $products = $query->paginate(10);
-
-
-
-        Log::info(json_encode($products));
-
-        return response()->json($products, 200, ['Content-Type' => 'application/json']);
-    }
+    
 
 
     public function add(AddProductRequest $request)
