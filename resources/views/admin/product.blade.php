@@ -10,7 +10,7 @@
                     </button>
                 </a>
                 <select id="categoryFilter" name="category_id" class="form-control">
-                    <option value="">All Categories</option>
+                    <option value="">الكل </option>
                     @foreach ($categories as $category)
                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                     @endforeach
